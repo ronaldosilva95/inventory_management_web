@@ -1,0 +1,41 @@
+.columnDescription {
+    width: 20rem;
+}
+
+.columnValue {
+    width: 10rem;
+}
+
+.columnAction {
+    width: 10rem;
+}
+
+.addButton {
+    margin: 10px;
+
+    width: 15rem;
+    height: 32px;
+    border: 0;
+    cursor: pointer;
+    background: #3cdc8c;
+    border-radius: 20px;
+    color: #ffffff;
+    font-weight: 800;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    transition: background-color 0.2s;
+
+    &:hover {
+        background: #36cf82;
+    }
+}
+
+.tableContainer {
+    margin: 20px;
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+}
