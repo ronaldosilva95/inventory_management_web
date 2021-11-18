@@ -15,7 +15,7 @@ export async function deleteClient(clientId: number) {
     return api.delete(CLIENT_URI + `/${clientId}`);
 }
 
-export async function getClients() {
+export async function getAllClients() {
     return await api.get(CLIENT_URI);
 }
 

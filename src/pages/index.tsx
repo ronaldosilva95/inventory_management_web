@@ -10,7 +10,21 @@ const Home: NextPage = () => {
                 <title>Home | Toaki</title>
             </Head>
 
-            <h1>Home</h1>
+            <h5>Bem vindo(a) ao sistema de gerenciamento de estoques!</h5>
+
+            <div className="my-5">
+                <ul>
+                    <li>
+                        Acesse <strong>"Produtos"</strong> para cadastrar/consultar os produtos disponíveis
+                    </li>
+                    <li>
+                        Acesse <strong>"Clientes"</strong> para cadastrar/consultar clientes
+                    </li>
+                    <li>
+                        Acesse <strong>"Fornecedores"</strong> para cadastrar/consultar fornecedores
+                    </li>
+                </ul>
+            </div>
         </div>
     );
 };

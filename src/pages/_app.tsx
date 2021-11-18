@@ -7,14 +7,12 @@ import styles from '../styles/app.module.scss';
 import { Footer } from '../components/Footer';
 import { InventoryContextProvider } from '../contexts/InventoryContext';
 
-function MyApp({ Component, pageProps }: AppProps) {
-    //return <Component {...pageProps} />;
+function App({ Component, pageProps }: AppProps) {
     return (
         <InventoryContextProvider>
             <div>
                 <Header />
                 <div className={styles.container}>
-                    {/* <Sidebar /> */}
                     <div className="container-fluid">
                         <Component {...pageProps} />
                     </div>
@@ -25,4 +23,4 @@ function MyApp({ Component, pageProps }: AppProps) {
     );
 }
 
-export default MyApp;
+export default App;

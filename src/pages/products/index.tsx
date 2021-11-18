@@ -1,26 +1,31 @@
 import { FiEdit, FiXCircle, FiPlus } from 'react-icons/fi';
 import Link from 'next/link';
 import Head from 'next/head';
-import { GetStaticProps } from 'next';
-import { ProductType } from '../../types/product.type';
 
-import { getAllProducts } from '../../service/products.api';
+import { useEffect } from 'react';
+import { useInventory } from '../../contexts/InventoryContext';
 
-type ProductsProps = {
-    productList: ProductType[];
-};
+export default function Products() {
+    const { productList, setCurrentProduct, clearCurrentProduct, loadProducts, deleteCurrentProduct } = useInventory();
 
-export default function Products({ productList }: ProductsProps) {
-    console.log(productList);
+    useEffect(() => {
+        loadProducts();
+    }, []);
+
+    async function deleteProduct(productId: number) {
+        await deleteCurrentProduct(productId);
+        await loadProducts();
+        return;
+    }
 
     return (
         <div>
             <Head>
                 <title>Produtos | Toaki</title>
             </Head>
-            <h1>Produtos</h1>
+            <h3 className="mb-5">Listagem de Produtos</h3>
             <div>
-                <button className="btn btn-success">
+                <button className="btn btn-success" onClick={() => clearCurrentProduct()}>
                     <Link href="/products/register">
                         <label htmlFor="">
                             <FiPlus />
@@ -42,13 +47,19 @@ export default function Products({ productList }: ProductsProps) {
                     <tbody>
                         {productList.map(p => {
                             return (
-                                <tr>
+                                <tr key={p.productId}>
                                     <td>{p.description}</td>
                                     <td>{p.value}</td>
                                     <td>{p.quantity}</td>
                                     <td>
-                                        <FiEdit />
-                                        <FiXCircle />
+                                        <Link href="/products/register">
+                                            <span className="mx-1">
+                                                <FiEdit onClick={() => setCurrentProduct(p)} />
+                                            </span>
+                                        </Link>
+                                        <span className="mx-1">
+                                            <FiXCircle onClick={() => deleteProduct(Number(p.productId))} />
+                                        </span>
                                     </td>
                                 </tr>
                             );
@@ -60,14 +71,13 @@ export default function Products({ productList }: ProductsProps) {
     );
 }
 
-export const getStaticProps: GetStaticProps = async () => {
-    const { data } = await getAllProducts();
-    console.log(data);
+// export const getStaticProps: GetStaticProps = async () => {
+//     const { data } = await getAllProducts();
 
-    return {
-        props: {
-            productList: data,
-        },
-        revalidate: 60 * 60 * 1, // 1 hora
-    };
-};
+//     return {
+//         props: {
+//             productList: data,
+//         },
+//         revalidate: 60 * 60 * 1, // 1 hora
+//     };
+// };
