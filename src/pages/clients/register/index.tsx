@@ -7,13 +7,7 @@ export default function Register() {
     const [addressClient, setAddressClient] = useState('');
     const [phoneClient, setPhoneClient] = useState('');
 
-    const {
-        currentClient,
-        clearCurrentClient,
-        saveCurrentClient,
-        deleteCurrentClient,
-        loadProviders,
-    } = useInventory();
+    const { currentClient, clearCurrentClient, saveCurrentClient, deleteCurrentClient, loadProviders } = useInventory();
 
     useEffect(() => {
         if (currentClient.clientId != null) {
@@ -83,27 +77,17 @@ export default function Register() {
 
                 <div className="gap-2 d-md-block">
                     <Link href="/clients">
-                        <button
-                            className="btn btn-success mx-1"
-                            onClick={saveClient}
-                        >
+                        <button className="btn btn-success mx-1" onClick={saveClient}>
                             Confirmar
                         </button>
                     </Link>
                     <Link href="/clients">
-                        <button
-                            className="btn btn-danger mx-1"
-                            onClick={deleteClient}
-                            disabled={currentClient.clientId == null}
-                        >
+                        <button className="btn btn-danger mx-1" onClick={deleteClient} disabled={currentClient.clientId == null}>
                             Excluir cliente
                         </button>
                     </Link>
                     <Link href="/clients">
-                        <button
-                            className="btn btn-secondary mx-1"
-                            onClick={() => clearCurrentClient()}
-                        >
+                        <button className="btn btn-secondary mx-1" onClick={() => clearCurrentClient()}>
                             Cancelar
                         </button>
                     </Link>

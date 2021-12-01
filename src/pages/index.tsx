@@ -23,6 +23,12 @@ const Home: NextPage = () => {
                     <li>
                         Acesse <strong>"Fornecedores"</strong> para cadastrar/consultar fornecedores
                     </li>
+                    <li>
+                        Acesse <strong>"Vendas"</strong> para realizar/consultar uma venda
+                    </li>
+                    <li>
+                        Acesse <strong>"Relatórios"</strong> para consultar os relatórios
+                    </li>
                 </ul>
             </div>
         </div>

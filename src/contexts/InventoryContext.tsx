@@ -1,91 +1,99 @@
 import { createContext, ReactNode, useContext, useState } from 'react';
-import {
-    createClient,
-    deleteClient,
-    getAllClients,
-    updateClient,
-} from '../service/clients.api';
+import { createClient, deleteClient, getAllClients, updateClient } from '../service/clients.api';
 import {
     createProduct,
     deleteProduct,
     getAllProducts,
     getProductById,
+    getProductsLessSaled,
+    getProductsMoreSaled,
     updateProduct,
 } from '../service/products.api';
-import {
-    createProvider,
-    deleteProvider,
-    getAllProviders,
-    updateProvider,
-} from '../service/providers.api';
+import { createProvider, deleteProvider, getAllProviders, updateProvider } from '../service/providers.api';
+import { createSale, deleteSale, getAllSales } from '../service/sales.api';
 import { ClientType } from '../types/client.type';
 import { ProductType } from '../types/product.type';
 import { ProviderType } from '../types/provider.type';
+import { SaleType } from '../types/sale.type';
 
 type InventoryContextData = {
     productList: ProductType[];
     clientList: ClientType[];
     providerList: ProviderType[];
+    saleList: SaleType[];
+    productsReport: ProductType[];
     currentProduct: ProductType;
     currentClient: ClientType;
     currentProvider: ProviderType;
+    currentSale: SaleType;
     setCurrentProduct: (product: ProductType) => void;
     setCurrentClient: (client: ClientType) => void;
     setCurrentProvider: (provider: ProviderType) => void;
+    setCurrentSale: (sale: SaleType) => void;
     clearCurrentProduct: () => void;
     clearCurrentClient: () => void;
     clearCurrentProvider: () => void;
+    clearCurrentSale: () => void;
     loadProducts: () => void;
     getProduct: (productId: number) => any;
     loadClients: () => void;
     loadProviders: () => void;
+    loadSales: () => void;
+    loadProductsMoreSaled: () => void;
+    loadProductsLessSaled: () => void;
     saveCurrentProduct: (product: ProductType) => void;
     saveCurrentClient: (client: ClientType) => void;
     saveCurrentProvider: (provider: ProviderType) => void;
+    saveCurrentSale: (sale: SaleType) => void;
     deleteCurrentProduct: (productId: number) => void;
     deleteCurrentClient: (clientId: number) => void;
     deleteCurrentProvider: (providerId: number) => void;
+    deleteCurrentSale: (saleId: number) => void;
 };
 
 type InventoryContextProviderProps = {
     children: ReactNode;
 };
 
-const productDefault: ProductType = {
+export const productDefault: ProductType = {
     description: '',
     value: 0,
     quantity: 0,
+    providerId: 0,
 };
 
-const clientDefault: ClientType = {
+export const clientDefault: ClientType = {
     name: '',
     address: '',
     phone: '',
 };
 
-const providerDefault: ProviderType = {
+export const providerDefault: ProviderType = {
     name: '',
     phone: '',
     address: '',
+};
+
+export const saleDefault: SaleType = {
+    clientId: 0,
+    productId: 0,
+    date: '',
 };
 
 export const InventoryContext = createContext({} as InventoryContextData);
 
-export function InventoryContextProvider({
-    children,
-}: InventoryContextProviderProps) {
+export function InventoryContextProvider({ children }: InventoryContextProviderProps) {
     const [productList, setProductList] = useState<ProductType[]>([]);
     const [clientList, setClientList] = useState<ClientType[]>([]);
     const [providerList, setProviderList] = useState<ProviderType[]>([]);
+    const [saleList, setSaleList] = useState<SaleType[]>([]);
 
-    const [currentProduct, setCurrentProduct] =
-        useState<ProductType>(productDefault);
+    const [productsReport, setProductsReport] = useState<ProductType[]>([]);
 
-    const [currentClient, setCurrentClient] =
-        useState<ClientType>(clientDefault);
-
-    const [currentProvider, setCurrentProvider] =
-        useState<ProviderType>(providerDefault);
+    const [currentProduct, setCurrentProduct] = useState<ProductType>(productDefault);
+    const [currentClient, setCurrentClient] = useState<ClientType>(clientDefault);
+    const [currentProvider, setCurrentProvider] = useState<ProviderType>(providerDefault);
+    const [currentSale, setCurrentSale] = useState<SaleType>(saleDefault);
 
     function clearCurrentProduct() {
         setCurrentProduct(productDefault);
@@ -97,6 +105,10 @@ export function InventoryContextProvider({
 
     async function clearCurrentProvider() {
         setCurrentProvider(providerDefault);
+    }
+
+    async function clearCurrentSale() {
+        setCurrentSale(saleDefault);
     }
 
     async function loadProducts() {
@@ -119,6 +131,24 @@ export function InventoryContextProvider({
     async function loadProviders() {
         const { data } = await getAllProviders();
         setProviderList(data);
+        return data;
+    }
+
+    async function loadSales() {
+        const { data } = await getAllSales();
+        setSaleList(data);
+        return data;
+    }
+
+    async function loadProductsLessSaled() {
+        const { data } = await getProductsLessSaled();
+        setProductsReport(data);
+        return data;
+    }
+
+    async function loadProductsMoreSaled() {
+        const { data } = await getProductsMoreSaled();
+        setProductsReport(data);
         return data;
     }
 
@@ -146,6 +176,14 @@ export function InventoryContextProvider({
         return await createProvider(provider);
     }
 
+    async function saveCurrentSale(sale: SaleType) {
+        if (sale.saleId != null) {
+            return;
+        }
+
+        return await createSale(sale);
+    }
+
     async function deleteCurrentProduct(productId: number) {
         return await deleteProduct(productId);
     }
@@ -158,31 +196,45 @@ export function InventoryContextProvider({
         return await deleteProvider(providerId);
     }
 
+    async function deleteCurrentSale(saleId: number) {
+        return await deleteSale(saleId);
+    }
+
     return (
         <InventoryContext.Provider
             value={{
                 productList,
                 clientList,
                 providerList,
+                saleList,
+                productsReport,
                 currentProduct,
                 currentClient,
                 currentProvider,
+                currentSale,
                 setCurrentProduct,
                 setCurrentClient,
                 setCurrentProvider,
+                setCurrentSale,
                 clearCurrentProduct,
                 clearCurrentClient,
                 clearCurrentProvider,
+                clearCurrentSale,
                 loadProducts,
                 getProduct,
                 loadClients,
                 loadProviders,
+                loadSales,
+                loadProductsMoreSaled,
+                loadProductsLessSaled,
                 saveCurrentProduct,
                 saveCurrentClient,
                 saveCurrentProvider,
+                saveCurrentSale,
                 deleteCurrentProduct,
                 deleteCurrentClient,
                 deleteCurrentProvider,
+                deleteCurrentSale,
             }}
         >
             {children}

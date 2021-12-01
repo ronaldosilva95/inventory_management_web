@@ -22,3 +22,11 @@ export async function getAllProducts() {
 export async function getProductById(productId: number) {
     return await api.delete(PRODUCT_URI + `/${productId}`);
 }
+
+export async function getProductsMoreSaled() {
+    return await api.get(PRODUCT_URI + '/more-saled');
+}
+
+export async function getProductsLessSaled() {
+    return await api.get(PRODUCT_URI + '/less-saled');
+}

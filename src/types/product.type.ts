@@ -3,4 +3,5 @@ export type ProductType = {
     description: string;
     quantity: number;
     value: number;
+    providerId: number;
 };

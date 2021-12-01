@@ -7,12 +7,7 @@ export default function RegisterProvider() {
     const [address, setAddress] = useState('');
     const [phone, setPhone] = useState('');
 
-    const {
-        currentProvider,
-        clearCurrentProvider,
-        saveCurrentProvider,
-        deleteCurrentProvider,
-    } = useInventory();
+    const { currentProvider, clearCurrentProvider, saveCurrentProvider, deleteCurrentProvider } = useInventory();
 
     useEffect(() => {
         if (currentProvider.providerId != null) {
@@ -43,13 +38,7 @@ export default function RegisterProvider() {
                     <label className="form-label" htmlFor="description">
                         Nome
                     </label>
-                    <input
-                        className="form-control"
-                        type="text"
-                        id="name"
-                        value={name}
-                        onChange={i => setName(i.target.value)}
-                    />
+                    <input className="form-control" type="text" id="name" value={name} onChange={i => setName(i.target.value)} />
                 </div>
 
                 <div className="mb-3">
@@ -80,10 +69,7 @@ export default function RegisterProvider() {
 
                 <div className="gap-2 d-md-block">
                     <Link href="/providers">
-                        <button
-                            className="btn btn-success mx-1"
-                            onClick={saveProvider}
-                        >
+                        <button className="btn btn-success mx-1" onClick={saveProvider}>
                             Confirmar
                         </button>
                     </Link>
@@ -97,10 +83,7 @@ export default function RegisterProvider() {
                         </button>
                     </Link>
                     <Link href="/providers">
-                        <button
-                            className="btn btn-secondary mx-1"
-                            onClick={() => clearCurrentProvider()}
-                        >
+                        <button className="btn btn-secondary mx-1" onClick={() => clearCurrentProvider()}>
                             Cancelar
                         </button>
                     </Link>

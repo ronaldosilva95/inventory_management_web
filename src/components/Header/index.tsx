@@ -3,7 +3,8 @@ import format from 'date-fns/format';
 import ptBR from 'date-fns/locale/pt-BR';
 import { AiOutlineHome } from 'react-icons/ai';
 import { BsInboxes, BsPerson } from 'react-icons/bs';
-import { MdWorkOutline } from 'react-icons/md';
+import { MdWorkOutline, MdOutlineSell } from 'react-icons/md';
+import { HiOutlineDocumentReport } from 'react-icons/hi';
 
 export function Header() {
     const currentDate = format(new Date(), 'eeee, PPP', {
@@ -49,6 +50,22 @@ export function Header() {
                                 <a className="nav-link px-2 text-white">
                                     <MdWorkOutline />
                                     <span className="mx-1">Fornecedores</span>
+                                </a>
+                            </Link>
+                        </li>
+                        <li>
+                            <Link href="/sales">
+                                <a className="nav-link px-2 text-white">
+                                    <MdOutlineSell />
+                                    <span className="mx-1">Vendas</span>
+                                </a>
+                            </Link>
+                        </li>
+                        <li>
+                            <Link href="/reports">
+                                <a className="nav-link px-2 text-white">
+                                    <HiOutlineDocumentReport />
+                                    <span className="mx-1">Relatórios</span>
                                 </a>
                             </Link>
                         </li>
